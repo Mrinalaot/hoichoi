@@ -56,7 +56,7 @@
                 '">Download in '+quality+'</a>';
             $('.overlay-episode-details').append(node);
         }
-        $('.tzsk_download').attr('href', src);
+        $('.tzsk-download').attr('href', src);
         button = true;
         if (interval) {
             clearTimeout(interval);
