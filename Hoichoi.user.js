@@ -45,7 +45,7 @@
 
     function showButton() {
         if (button) {
-            $('.tzsk_download').remove();
+            $('.tzsk-download').remove();
             button = false;
         }
         if (! button) {
@@ -65,7 +65,7 @@
 
     $(document).on('click', '.tzsk-download', function(e) {
         e.preventDefault();
-        alert("Right Click on this button then click 'Save link as' to download.");
+        alert("Right Click and then click 'Save link as' to download");
         return false;
     });
 })();
