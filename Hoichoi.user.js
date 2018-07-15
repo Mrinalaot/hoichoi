@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Hoichoi
-// @namespace    http://tampermonkey.net/
+// @namespace    http://tzsk.github.io/
 // @version      1.0
 // @description  Hoichoi TV Downloader
 // @author       tzsk
