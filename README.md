@@ -1,6 +1,8 @@
 # Hoichoi TV Downloader
 
-This script requires Tampermonkey extension to be present in Chrome
+This script requires Tampermonkey extension to be present in the Browser
+
+> Works better in chrome
 
 ## Installation
 
