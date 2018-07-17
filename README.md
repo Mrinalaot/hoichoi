@@ -33,4 +33,4 @@ Download and Stream and also the quality. You can change the Video Quality from 
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
