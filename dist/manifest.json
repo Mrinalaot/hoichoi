@@ -37,10 +37,6 @@
 		"keyword": "OMNIBOX-KEYWORD"
 	},
 	"page_action": {
-		"matches": [
-			"http://*.hoichoi.tv/*",
-			"https://*.hoichoi.tv/*"
-		],
 		"default_icon": {
 			"19": "images/icon-19.png",
 			"38": "images/icon-38.png"
