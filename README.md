@@ -1,8 +1,8 @@
-# Hoichoi TV Downloader
+# Hoichoi TV Downloader 2.0
 
-This is a hoichoi tv downloader.
+This is a hoichoi tv downloader. With the new Version 2.0 you can download or stream without subscription.
 
-Now download or stream the hoichoi tv videos without any subscription. This package also has Tampermonkey support.
+**NOTE: Only Tampermonkey solution works in 2.0. Others are under development.**
 
 ## Installation
 
@@ -12,7 +12,7 @@ Now download or stream the hoichoi tv videos without any subscription. This pack
 2. Click on `Tampermonkey` icon and enble it if it is not already enabled.
 3. Click here to install the script: [Hoichoi](https://github.com/tzsk/hoichoi/raw/master/Hoichoi.user.js)
 
-#### Chrome Extension
+#### Chrome Extension (2.0 Under Development)
 
 1. Clone this pakage or download in zip and then unzip.
 2. Go to Extension Explorer (`Chrome menu > More tools > Extensions`)
@@ -20,7 +20,7 @@ Now download or stream the hoichoi tv videos without any subscription. This pack
 4. Click `Load Unpacked` option.
 5. Navigate to the Clonned / Downloaded folder then select the `dist` folder.
 
-#### Firefox Addon
+#### Firefox Addon (2.0 Under Development)
 
 1. Clone this pakage or download in zip and then unzip.
 2. Open Debug addon page by typing in the url: `about:debugging#addons`.
@@ -31,12 +31,11 @@ Now download or stream the hoichoi tv videos without any subscription. This pack
 
 #### Tampermonkey
 
-Open any video on `hoichoi.tv` and a Download link will appear right beside the Video Information. You can change the Video Quality from the Video Controls and it will adjust accordingly.
+Open any video on `hoichoi.tv` and a Streaming link will appear right where the subscription prompt used to appear. Click on it, the video will open in a new tab. Then in the bottom right hand corner you have the option to download if you want to save it.
 
 #### Chrome Extension & Firefox Addon
 
-Open any video on `hoichoi.tv` and then click on the extension icon it will show the video information and 2 links.
-Download and Stream and also the quality. You can change the Video Quality from the Video Controls and it will adjust accordingly.
+- 2.0 Under Development
 
 ## License
 
