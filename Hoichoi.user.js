@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Hoichoi
 // @namespace    http://tzsk.github.io/
-// @version      1.0
+// @version      2.0
 // @description  Hoichoi TV Downloader
 // @author       tzsk
 // @match        https://www.hoichoi.tv/*
@@ -9,63 +9,110 @@
 // @require      http://code.jquery.com/jquery-1.12.4.min.js
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
-    var src ='';
-    var button = false;
-    var interval;
-    var fileName ='';
+    var Hoichoi = {
+        path: 'https://prod-api.viewlift.com/content/videos/',
+        note: `<span style="font-size:12px;">Chose quality to Stream or Download</span>`,
+        attach() {
+            var vm = this;
+            var XHR = XMLHttpRequest.prototype;
+            // Remember references to original methods
+            var open = XHR.open;
+            var send = XHR.send;
 
-    $(document).on('click', '.video-tray-item', function () {
-        if (interval) {
-            clearTimeout(interval);
-        }
-        interval = setInterval(check, 2000);
-    });
+            // Overwrite native methods
+            // Collect data:
+            XHR.open = function (method, url) {
+                this._method = method;
+                this._url = url;
+                return open.apply(this, arguments);
+            };
 
-    $(document).on('click', '.vjs-resolution-menu li', function () {
-        if (interval) {
-            clearTimeout(interval);
-        }
-        interval = setInterval(check, 2000);
-    });
+            // Implement "ajaxSuccess" functionality
+            XHR.send = function (postData) {
+                this.addEventListener('load', function () {
+                    vm.loaded(this);
+                });
+                return send.apply(this, arguments);
+            };
+        },
+        parse(content) {
+            var details = { title: content.gist.title, image: content.gist.videoImageUrl, videos: [] };
 
-    function check(){
-        var videoLink = document.querySelector('.vjs-tech');
-        if(videoLink){
-            fileName = document.querySelector(".episode-name .name").innerText;
-            console.log('Ready to Hoichoi...');
+            if (content.streamingInfo.videoAssets.mpeg.length > 0) {
+                content.streamingInfo.videoAssets.mpeg.forEach(function (item) {
+                    var quality = item.renditionValue;
+                    details.videos.push({
+                        quality: quality.substr(1, quality.length),
+                        url: item.url
+                    });
+                });
+            }
 
-            clearTimeout(interval);
-            src = videoLink.src;
-            showButton();
-        }
-    }
+            return details;
+        },
+        loaded(xhr) {
+            if (xhr._url.includes(this.path)) {
+                var episode = this.parse(JSON.parse(xhr.responseText));
+                this.render(episode);
+            }
+        },
+        render(info) {
+            var vm = this;
+            setTimeout(function() {
+                var $prompt = $('.subscription-prompt .overlay');
+                if ($prompt.length <= 0) {
+                    if (confirm('You watching free content. Pausing Hoichoi Unlocked...')) {
+                        return;
+                    } else {
+                        return vm.render(info);
+                    }
+                }
 
-    function showButton() {
-        if (button) {
-            $('.tzsk-download').remove();
-            button = false;
-        }
-        if (! button) {
-            var quality = $('.current-resolution').text();
-            var style = 'font-weight:bold;';
-            var node = '<a href="#" download="'+fileName+
-                '.mp4" class="tzsk-download site-color" style="'+style+
-                '">Download in '+quality+'</a>';
-            $('.overlay-episode-details').append(node);
-        }
-        $('.tzsk-download').attr('href', src);
-        button = true;
-        if (interval) {
-            clearTimeout(interval);
-        }
-    }
+                $prompt.find('p').html(`${info.title} <br> ${vm.note}`);
+                $prompt.find('.button-container').html(vm.links(info.videos));
+            }, 200);
+        },
+        links(videos) {
+            var html = '';
+            videos.forEach(function (video) {
+                html += `<a href="${video.url}" target="_blank" class="cta button" style="margin-right:10px;">
+                    ${video.quality}
+                </a>`;
+            });
 
-    $(document).on('click', '.tzsk-download', function(e) {
-        e.preventDefault();
-        alert("Right Click and then click 'Save link as' to download");
-        return false;
-    });
+            return html;
+        },
+        find() {
+            var state = window.initialStoreState.page;
+            if (state === undefined) {
+                return;
+            }
+            if (state.data.title.toLowerCase() != 'video page') {
+                return;
+            }
+            var data = state.data;
+            var modules = data.modules.filter(function (item) {
+                return item.moduleType == 'VideoDetailModule';
+            });
+            if (modules.length <= 0) {
+                return;
+            }
+            var target = modules[0];
+            if (target.contentData.length <= 0) {
+                return;
+            }
+
+            var movie = this.parse(target.contentData[0]);
+            this.render(movie);
+        },
+        init() {
+            this.attach();
+            this.find();
+        }
+    };
+
+    Hoichoi.init();
 })();
