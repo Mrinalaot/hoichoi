@@ -1,0 +1,83 @@
+{
+  "name": "hoichoi",
+  "version": "1.0.0",
+  "description": "Hoichoi Search, Stream & Download",
+  "main": "public/main.js",
+  "scripts": {
+    "start": "npm run watch & electron .",
+    "electron": "electron .",
+    "watch": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "postinstall": "electron-rebuild"
+  },
+  "repository": {
+    "url": "https://github.com/tzsk/hoichoi"
+  },
+  "keywords": [
+    "HoichoiTV",
+    "Electron",
+    "Vue JS",
+    "Vuex",
+    "Vue Router",
+    "Tailwind CSS"
+  ],
+  "author": "tzsk",
+  "license": "MIT",
+  "devDependencies": {
+    "@vuetronex/cli": "0.0.2",
+    "axios": "^0.18.0",
+    "cross-env": "^5.2.0",
+    "electron": "^2.0.0",
+    "electron-forge": "^5.2.4",
+    "electron-prebuilt-compile": "4.0.0",
+    "electron-rebuild": "^1.8.4",
+    "elemon": "^5.0.3",
+    "laravel-mix": "^2.1.14",
+    "node-sass": "^4.9.3"
+  },
+  "dependencies": {
+    "electron-is-dev": "^0.3.0",
+    "electron-dl": "^1.13.0",
+    "tailwindcss": "^0.6.5",
+    "vue": "^2.6.3",
+    "vue-loading-overlay": "^3.1.1",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.6.3",
+    "vue-video-player": "^5.0.2",
+    "electron-compile": "^6.4.4",
+    "vuex": "^3.1.0"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip",
+          "dmg"
+        ],
+        "linux": [
+          "deb"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "npm"
+      },
+      "electronWinstallerConfig": {
+        "name": "Hoichoi 1.0.0",
+        "loadingGif": "./public/loading.gif",
+        "setupIcon": "./public/favicon.ico"
+      },
+      "electronInstallerDebian": {
+        "icon": "./public/favicon.ico"
+      },
+      "electronInstallerRedhat": {
+        "icon": "./public/favicon.ico"
+      }
+    }
+  }
+}
