@@ -1,6 +1,6 @@
 {
   "name": "hoichoi",
-  "productName": "Hoichoi",
+  "productName": "hoichoi",
   "version": "1.0.0",
   "description": "Hoichoi TV Search, Stream & Download",
   "main": "src/index.js",
