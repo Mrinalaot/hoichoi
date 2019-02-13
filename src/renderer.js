@@ -8,28 +8,13 @@ import App from './app/App.vue';
 import routes from './app/router';
 import http from './app/http';
 import store from './app/store';
+import menu from './menu';
 
-const titleBar = new Titlebar({
-    icon: './favicon.ico'
+new Titlebar({
+    icon: './favicon.ico',
+    menu
 });
 
-function openRepo() {
-    electron.remote.shell.openExternal('https://github.com/tzsk/hoichoi');
-}
-
-const menu = new electron.remote.Menu();
-menu.append(new electron.remote.MenuItem({
-    label: 'Help',
-    submenu: [{
-        label: 'Give a Star',
-        click: openRepo,
-    }, {
-        label: 'Report an Issue',
-        click: openRepo,
-    }]
-}));
-
-titleBar.updateMenu(menu);
 
 Vue.prototype.$http = http();
 Vue.prototype.$electron = electron;

@@ -40,7 +40,8 @@
       "electronWinstallerConfig": {
         "name": "hoichoi",
         "loadingGif": "src/loading.gif",
-        "setupIcon": "src/favicon.ico"
+        "setupIcon": "src/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/tzsk/hoichoi/app/public/favicon.ico"
       },
       "electronInstallerDebian": {
         "icon": "src/favicon.ico"
@@ -65,7 +66,8 @@
     "vue-loading-overlay": "^3.1.1",
     "vue-router": "^3.0.2",
     "vue-video-player": "^5.0.2",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "vueify": "^9.4.1"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",
@@ -74,7 +76,6 @@
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^2.1.0",
     "electron-forge": "^5.2.4",
-    "electron-prebuilt-compile": "4.0.0",
-    "vueify": "^9.4.1"
+    "electron-prebuilt-compile": "4.0.0"
   }
 }
