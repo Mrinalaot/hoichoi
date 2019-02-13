@@ -10,11 +10,11 @@ import http from './app/http';
 import store from './app/store';
 import menu from './menu';
 
-new Titlebar({
+let titleBar = new Titlebar({
     icon: './favicon.ico',
-    menu
+    menu: new electron.remote.Menu()
 });
-
+titleBar.updateMenu(menu);
 
 Vue.prototype.$http = http();
 Vue.prototype.$electron = electron;
