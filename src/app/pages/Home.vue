@@ -5,7 +5,8 @@
         </navigation>
         <div class="flex flex-col flex-1 items-center justify-center">
             <h1 class="font-hairline my-8">Hoichoi Search</h1>
-            <input type="text" class="p-4 rounded border border-grey w-1/2" @keydown="searchType" placeholder="Search">
+            <input type="text" class="p-4 rounded border border-grey w-1/2" @keydown="searchType" 
+                placeholder="Search" v-model="searchTerm">
             
             <transition name="slide" enter-active-class="slideInUp">
                 <h2 class="mt-4 font-hairline" v-if="seriesSearchResults.length > 0">Series</h2>
@@ -39,12 +40,18 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
     components: { Card, Navigation },
-    computed: Object.assign({}, mapState(['videoSearchResults', 'seriesSearchResults', 'searchTerm'])),
-    methods: Object.assign({}, 
-        mapActions(['searchSeries', 'searchVideos', 'callVideos']), {
+    data() {
+        return {
+            searchTerm: ''
+        }
+    },
+    computed: {
+        ...mapState(['videoSearchResults', 'seriesSearchResults'])
+    },
+    methods: { 
+        ...mapActions(['searchSeries', 'searchVideos', 'callVideos']),
         searchType(e) {
             if (e.keyCode == 13) {
-                this.$store.commit('setSearchTerm', e.target.value);
                 this.searchSeries(this.searchTerm);
                 this.searchVideos(this.searchTerm);
             }
@@ -61,6 +68,6 @@ export default {
                 }
             });
         },
-    })
+    }
 }
 </script>

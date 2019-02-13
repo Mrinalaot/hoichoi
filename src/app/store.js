@@ -9,16 +9,12 @@ export default new Vuex.Store({
     state: {
         loading: false,
         authToken: null,
-        searchTerm: '',
         videoSearchResults: [],
         seriesSearchResults: [],
         currentSeries: null,
         currentVideo: null,
     },
     mutations: {
-        setSearchTerm(state, term) {
-            state.searchTerm = term;
-        },
         setLoading(state, loading) {
             state.loading = loading;
         },

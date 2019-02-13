@@ -35,18 +35,23 @@
         ]
       },
       "electronPackagerConfig": {
+        "icon": "src/favicon.ico",
         "packageManager": "yarn"
       },
       "electronWinstallerConfig": {
         "name": "hoichoi",
+        "skipUpdateIcon": true,
         "loadingGif": "src/loading.gif",
         "setupIcon": "src/favicon.ico",
-        "iconUrl": "https://raw.githubusercontent.com/tzsk/hoichoi/app/public/favicon.ico"
+        "iconUrl": "https://raw.githubusercontent.com/tzsk/hoichoi/forge/src/favicon.ico"
       },
       "electronInstallerDebian": {
         "icon": "src/favicon.ico"
       },
       "electronInstallerRedhat": {
+        "icon": "src/favicon.ico"
+      },
+      "electronInstallerDMG": {
         "icon": "src/favicon.ico"
       },
       "github_repository": {
