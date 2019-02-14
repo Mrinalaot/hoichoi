@@ -1,7 +1,7 @@
 {
   "name": "hoichoi",
   "productName": "hoichoi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hoichoi TV Search, Stream & Download",
   "main": "src/index.js",
   "scripts": {

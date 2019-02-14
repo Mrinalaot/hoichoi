@@ -28,6 +28,10 @@ export default new Vuex.Store({
             state.seriesSearchResults = results;
         },
         setCurrentSeries(state, series) {
+            if (! series) {
+                state.currentSeries = null;
+                return;
+            }
             series.seasons = series.seasons.map(item => {
                 item.episodeIds = item.episodes.map(ep => ep.id);
 
@@ -70,25 +74,29 @@ export default new Vuex.Store({
             return http(this.state.authToken).get('/content/videos?site=hoichoitv&ids='+ids);
         },
         getSeasons(context, series) {
-            context.commit('setLoading', true);
-            let gotSeasons = series.seasons.map(async (item) => {
-                let res = await context.dispatch('callVideos', item.episodeIds.join(','));
-                let episodes = [];
-                let records = res.data.records;
-                item.episodeIds.forEach(id => {
-                    episodes.push(records.filter(re => re.gist.id == id)[0]);
+            return new Promise((resolve, reject) => {
+                context.commit('setLoading', true);
+                let gotSeasons = series.seasons.map(async (item) => {
+                    let res = await context.dispatch('callVideos', item.episodeIds.join(','));
+                    let episodes = [];
+                    let records = res.data.records;
+                    item.episodeIds.forEach(id => {
+                        episodes.push(records.filter(re => re.gist.id == id)[0]);
+                    });
+                    item.episodesInfo = episodes;
+
+                    return item;
                 });
-                item.episodesInfo = episodes;
 
-                return item;
-            });
-
-            Promise.all(gotSeasons).then((data) => {
-                series.seasons = data;
-                context.commit('setCurrentSeries', series);
-                context.commit('setLoading', false);
-            }).catch(err => {
-                context.commit('setLoading', false);
+                Promise.all(gotSeasons).then((data) => {
+                    series.seasons = data;
+                    context.commit('setCurrentSeries', series);
+                    context.commit('setLoading', false);
+                    resolve(data);
+                }).catch(err => {
+                    context.commit('setLoading', false);
+                    reject(err);
+                });
             });
         }
     }

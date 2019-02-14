@@ -65,7 +65,7 @@ export default {
         onVideoClick(video) {
             this.$store.commit('setCurrentVideo', video);
 
-            this.$router.push(`/video/${video.gist.id}?ref=${this.$route.params.sid}`);
+            this.$router.push(`/video/${video.gist.id}?ref=${this.$route.params.sid}&autoplay=1`);
         }
     }
 }

@@ -63,6 +63,7 @@ export default {
         onVideoClick(video) {
             this.callVideos(video.gist.id).then(res => {
                 if (res.data.records.length > 0) {
+                    this.$store.commit('setCurrentSeries', null);
                     this.$store.commit('setCurrentVideo', res.data.records[0]);
                     this.$router.push(`/video/${video.gist.id}`);
                 }
