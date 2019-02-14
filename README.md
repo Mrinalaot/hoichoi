@@ -6,6 +6,19 @@ This is a hoichoi tv downloader. With the new Version 2.0 you can download or st
 
 ## Installation
 
+#### Windows x64 Bit
+
+1. Download the software for here: [Hoichoi Setup](https://www.filehosting.org/file/details/781671/Hoichoi-1.0.0%20Setup.exe)
+2. Install it then Open it and search for any **Series** or **Movies**.
+3. Stream it online or Download from the download options.
+
+#### Ubuntu x64 Bit
+
+1. Download the software for here: [Hoichoi Setup](https://www.filehosting.org/file/details/781483/hoichoi_1.0.0_amd64.deb)
+2. Install it and then Open it and search for any **Series** or **Movies**.
+3. Stream it online or Download from the download options.
+
+
 #### Tampermonkey
 
 1. Install `Tampermonkey` extension from http://tampermonkey.net.
