@@ -45,7 +45,7 @@ export default {
                 this.$store.commit('setCurrentSeries', res.data);
                 this.fetchSeasons();
             });
-        } else {
+        } else if (! this.currentSeries.episodesFetched) {
             this.fetchSeasons();
         }
     },

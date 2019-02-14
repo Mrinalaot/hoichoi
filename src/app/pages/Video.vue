@@ -136,7 +136,7 @@ export default {
                     this.fetchSeasons();
                 });
             } else {
-                this.fetchSeasons();
+                this.prepareQueue(this.currentSeries.seasons);
             }
         },
         fetchSeasons() {
@@ -170,6 +170,7 @@ export default {
             this.$store.commit('setCurrentVideo', video);
 
             this.$router.push(`/video/${video.gist.id}?ref=${this.$route.query.ref}&autoplay=1`);
+            this.prepareQueue(this.currentSeries.seasons);
         },
         playNextVideo() {
             if (this.currentIndex < this.currentQueue.length) {

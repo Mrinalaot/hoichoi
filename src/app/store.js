@@ -90,6 +90,7 @@ export default new Vuex.Store({
 
                 Promise.all(gotSeasons).then((data) => {
                     series.seasons = data;
+                    series.episodesFetched = true;
                     context.commit('setCurrentSeries', series);
                     context.commit('setLoading', false);
                     resolve(data);
