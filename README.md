@@ -8,19 +8,19 @@ This is a hoichoi tv downloader. With the new Version 2.0 you can download or st
 
 #### Windows x64 Bit
 
-1. Download the software for here: [Hoichoi Setup 1.0.1](https://www.filehosting.org/file/details/781800/Hoichoi-1.0.1-Setup.exe). 
+1. Download the software from here: [Hoichoi Setup 1.0.1](https://www.filehosting.org/file/details/781800/Hoichoi-1.0.1-Setup.exe). 
 2. Install it then Open it and search for any **Series** or **Movies**.
 3. Stream it online or Download from the download options.
 
 #### Ubuntu x64 Bit
 
-1. Download the software for here: [Hoichoi Setup 1.0.1](https://www.filehosting.org/file/details/781934/hoichoi_1.0.1_amd64.deb)
+1. Download the software from here: [Hoichoi Setup 1.0.1](https://www.filehosting.org/file/details/781934/hoichoi_1.0.1_amd64.deb)
 2. Install it and then Open it and search for any **Series** or **Movies**.
 3. Stream it online or Download from the download options.
 
 #### MacOS x64 Bit
 
-1. Download the software for here: [Hoichoi Setup 1.0.0](https://www.filehosting.org/file/details/781682/hoichoi-1.0.0.dmg)
+1. Download the software from here: [Hoichoi Setup 1.0.0](https://www.filehosting.org/file/details/781682/hoichoi-1.0.0.dmg)
 2. Install it and then Open it and search for any **Series** or **Movies**.
 3. Stream it online or Download from the download options.
 
