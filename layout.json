@@ -1,0 +1,40 @@
+{
+    "modules": [
+        {
+            "title": "Carousel",
+            "component": "Carousel"
+        },
+        {
+            "title": "Just Added",
+            "component": "Horizontal"
+        },
+        {
+            "title": "Originals",
+            "component": "Horizontal"
+        },
+        {
+            "title": "World Digital Premiere",
+            "component": "Carousel"
+        },
+        {
+            "title": "Trending Movies",
+            "component": "Horizontal"
+        },
+        {
+            "title": "Blockbusters",
+            "component": "Horizontal"
+        },
+        {
+            "title": "hoichoi Original Films",
+            "component": "Carousel"
+        },
+        {
+            "title": "Watch in Hindi",
+            "component": "Horizontal"
+        },
+        {
+            "title": "Award Winning Films",
+            "component": "Horizontal"
+        }
+    ]
+}
