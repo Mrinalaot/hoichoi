@@ -2,9 +2,13 @@
 
 This is a hoichoi tv downloader. With the new Version 2.0 you can download or stream without subscription.
 
-**NOTE: Only Tampermonkey solution works in 2.0. Others are under development.**
+**Android App is Released**
 
 ## Installation
+
+#### Android
+
+Download the APK from here: [Hoichoi TV](https://drive.google.com/file/d/1G0bnJCjKZt3IcyEUxQHIEMq9zct0LldX/view?usp=drivesdk)
 
 #### Windows x64 Bit
 
