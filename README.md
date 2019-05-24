@@ -8,7 +8,11 @@ This is a hoichoi tv downloader. With the new Version 2.0 you can download or st
 
 ### :fire: Android :fire:
 
-**Download the APK from here: [Hoichoi TV](https://drive.google.com/file/d/1G0bnJCjKZt3IcyEUxQHIEMq9zct0LldX/view?usp=drivesdk)**
+**Scan this QR Code to get the App**
+
+![Hoichoi TV](https://www.diawi.com/qrcode/9d9zBR "Hoichoi TV Android App")
+
+**Or Download the APK from here: [Hoichoi TV](https://i.diawi.com/9d9zBR)**
 
 #### Windows x64 Bit
 
