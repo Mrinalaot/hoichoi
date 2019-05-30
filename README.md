@@ -10,6 +10,12 @@ This is a hoichoi tv downloader. With the new Version 2.0 you can download or st
 
 **Download the APK from here: [Hoichoi TV](https://www.androidfilehost.com/?fid=6006931924117884304)**
 
+#### Tampermonkey
+
+1. Install `Tampermonkey` extension from http://tampermonkey.net.
+2. Click on `Tampermonkey` icon and enble it if it is not already enabled.
+3. Click here to install the script: [Hoichoi](https://github.com/tzsk/hoichoi/raw/master/Hoichoi.user.js)
+
 #### Windows x64 Bit [FILE MISSING]
 
 1. Download the software from here: [Hoichoi Setup 1.0.1](https://www.filehosting.org/file/details/781800/Hoichoi-1.0.1-Setup.exe). 
@@ -27,13 +33,6 @@ This is a hoichoi tv downloader. With the new Version 2.0 you can download or st
 1. Download the software from here: [Hoichoi Setup 1.0.0](https://www.filehosting.org/file/details/781682/hoichoi-1.0.0.dmg)
 2. Install it and then Open it and search for any **Series** or **Movies**.
 3. Stream it online or Download from the download options.
-
-
-#### Tampermonkey [NOT WORKING]
-
-1. Install `Tampermonkey` extension from http://tampermonkey.net.
-2. Click on `Tampermonkey` icon and enble it if it is not already enabled.
-3. Click here to install the script: [Hoichoi](https://github.com/tzsk/hoichoi/raw/master/Hoichoi.user.js)
 
 ## Usage
 
