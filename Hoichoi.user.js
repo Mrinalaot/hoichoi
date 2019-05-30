@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Hoichoi
 // @namespace    http://tzsk.github.io/
-// @version      2.0
+// @version      2.1
 // @description  Hoichoi TV Downloader
 // @author       tzsk
 // @match        https://www.hoichoi.tv/*
@@ -15,6 +15,7 @@
     var Hoichoi = {
         path: 'https://prod-api.viewlift.com/content/videos/',
         note: `<span style="font-size:12px;">Chose quality to Stream or Download</span>`,
+        retryCount: 1,
         attach() {
             var vm = this;
             var XHR = XMLHttpRequest.prototype;
@@ -37,6 +38,11 @@
                 });
                 return send.apply(this, arguments);
             };
+
+            $(document).on('click', 'a.video-tray-item', function(e) {
+                e.stopPropagation();
+                window.open($(this).attr('href'), '_blank');
+            });
         },
         parse(content) {
             var details = { title: content.gist.title, image: content.gist.videoImageUrl, videos: [] };
@@ -64,11 +70,13 @@
             setTimeout(function() {
                 var $prompt = $('.subscription-prompt .overlay');
                 if ($prompt.length <= 0) {
-                    if (confirm('You watching free content. Pausing Hoichoi Unlocked...')) {
+                    if (vm.retryCount > 20) {
                         return;
-                    } else {
-                        return vm.render(info);
                     }
+                    console.log('Trying to find hoichoi stream');
+                    vm.retryCount += 1;
+
+                    return vm.render(info);
                 }
 
                 $prompt.find('p').html(`${info.title} <br> ${vm.note}`);
