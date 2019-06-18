@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Hoichoi TV",
+    "slug": "hoichoi",
+    "privacy": "public",
+    "sdkVersion": "32.0.0",
+    "platforms": [
+      "android"
+    ],
+    "version": "1.3.2",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-screen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f4181c"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android" : {
+      "package" : "com.tzskr.hoichoi"
+    }
+  }
+}
