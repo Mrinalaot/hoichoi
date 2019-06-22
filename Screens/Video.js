@@ -39,11 +39,11 @@ class Video extends Component {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
         <View style={{height: StatusBar.currentHeight}} />
-        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 2}}>
+        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 5, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
-            <Icon name="arrow-back" size={24} style={{marginRight: 20}} />
+            <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white" />
           </TouchableRipple>
-          <Text style={{fontSize: 18, fontWeight: '400', flex: 1}}>{this.state.data.gist.title}</Text>
+          <Text style={{fontSize: 18, fontWeight: '400', flex: 1, color: 'white'}}>{this.state.data.gist.title}</Text>
           <TouchableRipple onPress={this.toggleFavorite.bind(this)}>
             {this.displayFavoriteIcon()}
           </TouchableRipple>
@@ -110,10 +110,10 @@ class Video extends Component {
 
   displayFavoriteIcon() {
     if (this.state.favorite) {
-      return <Icon name="favorite" size={24} color="#f4181c" />
+      return <Icon name="favorite" size={24} color="white" />
     }
 
-    return <Icon name="favorite-border" size={24} />
+    return <Icon name="favorite-border" size={24} color="white" />
   }
 
   setFavorite(video) {

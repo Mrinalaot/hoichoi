@@ -21,11 +21,11 @@ class Video extends Component {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
         <View style={{height: StatusBar.currentHeight}} />
-        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 2}}>
+        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 2, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
-            <Icon name="arrow-back" size={24} style={{marginRight: 20}} />
+            <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white" />
           </TouchableRipple>
-          <Text style={{fontSize: 18, fontWeight: '400', flex: 1}}>{this.getTitle()}</Text>
+          <Text style={{fontSize: 18, fontWeight: '400', flex: 1, color: 'white'}}>{this.getTitle()}</Text>
         </Surface>
         <View style={{flex: 1, backgroundColor: 'white', padding: 20}}>
           <TextInput label="Title" mode="outlined" style={{ marginBottom: 20 }} theme={{colors: {primary: '#f4181c'}}}

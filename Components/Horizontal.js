@@ -9,7 +9,7 @@ export default class Horizontal extends Component {
         let { title, data } = this.props;
 
         return (
-            <Animatable.View style={{ backgroundColor: 'white'}} animation="fadeIn">
+            <Animatable.View style={{ backgroundColor: 'white'}} animation="fadeInUp">
                 <Text style={{ fontSize: 16, padding: 10, fontWeight: '500'}}>{title}</Text>
                 <FlatList data={data} horizontal={true}
                     showsHorizontalScrollIndicator={false}

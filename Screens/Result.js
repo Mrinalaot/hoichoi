@@ -33,11 +33,11 @@ export default class Result extends Component {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
         <View style={{height: this.barHeight}}></View>
-        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 2}}>
+        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 5, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
-            <Icon name="arrow-back" size={24} style={{marginRight: 20}}></Icon>
+            <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white" />
           </TouchableRipple>
-          <Text style={{fontSize: 18, fontWeight: '400', flex: 1}}>Results for '{this.props.navigation.getParam('search')}'</Text>
+          <Text style={{fontSize: 18, fontWeight: '400', flex: 1, color: 'white'}}>Results for '{this.props.navigation.getParam('search')}'</Text>
         </Surface>
         <View style={{flex: 1, backgroundColor: 'white'}}>
           {this.renderList()}

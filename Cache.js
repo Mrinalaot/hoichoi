@@ -67,10 +67,10 @@ class CacheStore {
         let timeKeys = cacheKeys.filter(item => item.endsWith('.time'));
 
         timeKeys.forEach(key => {
-            let key = key.split('.').slice(1, -1).join('.');
+            let actual = key.split('.').slice(1, -1).join('.');
             
-            this.expired(key).then(expired => {
-                expired ? this.forget(key) : null;
+            this.expired(actual).then(expired => {
+                expired ? this.forget(actual) : null;
             });
         });
     }

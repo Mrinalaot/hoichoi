@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ListView, Dimensions } from 'react-native';
+import { View, Text, StatusBar, ListView, Dimensions, FlatList } from 'react-native';
 import { Surface, ActivityIndicator, TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
@@ -9,8 +9,6 @@ import Favorite from '../favorite';
 export default class Favorites extends Component {
 
   state = {
-    seriesDataSource: null,
-    videosDataSource: null,
     fetched: false,
     seriesList: [],
     videoList: [],
@@ -19,19 +17,12 @@ export default class Favorites extends Component {
   componentWillMount() {
     this.barHeight = StatusBar.currentHeight;
 
-    const provider = new ListView.DataSource({rowHasChanged: (r1, r2) => {
-        return r1 !== r2;
-    }});
-    this.rowRenderer = this._rowRenderer.bind(this);
-
     Promise.all([Favorite.series().get(), Favorite.video().get()]).then(findings => {
       let series = Array.isArray(findings[0]) ? findings[0] : [];
       let videos = Array.isArray(findings[1]) ? findings[1] : [];
       this.setState({
         seriesList: series,
         videoList: videos,
-        seriesDataSource: provider.cloneWithRows(series), 
-        videosDataSource: provider.cloneWithRows(videos), 
         fetched: true
       });
     });
@@ -41,11 +32,11 @@ export default class Favorites extends Component {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
         <View style={{height: this.barHeight}}></View>
-        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 2}}>
+        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 5, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
-            <Icon name="arrow-back" size={24} style={{marginRight: 20}}></Icon>
+            <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white"></Icon>
           </TouchableRipple>
-          <Text style={{fontSize: 18, fontWeight: '400', flex: 1}}>Favorites</Text>
+          <Text style={{fontSize: 18, fontWeight: '400', flex: 1, color: 'white'}}>Favorites</Text>
         </Surface>
         <View style={{flex: 1, backgroundColor: 'white'}}>
           {this.renderList()}
@@ -83,7 +74,8 @@ export default class Favorites extends Component {
     if (this.state.seriesList.length) {
       return (
         <View>
-          <ListView dataSource={this.state.seriesDataSource} renderRow={this.rowRenderer} enableEmptySections={true}/>
+          <FlatList data={this.state.seriesList} renderItem={({item}) => this._rowRenderer(item)} 
+            keyExtractor={(item, index) => `${index}`} />
         </View>
       );
     }
@@ -93,7 +85,8 @@ export default class Favorites extends Component {
     if (this.state.videoList.length) {
       return (
         <View>
-          <ListView dataSource={this.state.videosDataSource} renderRow={this.rowRenderer} enableEmptySections={true}/>
+          <FlatList data={this.state.videoList} renderItem={({item}) => this._rowRenderer(item)} 
+            keyExtractor={(item, index) => `${index}`} />
         </View>
       );
     }
@@ -101,7 +94,7 @@ export default class Favorites extends Component {
 
   _rowRenderer(data) {
     return (
-      <View key={data.id} style={{padding: 10, justifyContent: 'center'}}>
+      <View style={{padding: 10, justifyContent: 'center'}}>
         <TouchableRipple onPress={() => this._goToDetail(data)}>
           <VideoCard data={data} />
         </TouchableRipple>

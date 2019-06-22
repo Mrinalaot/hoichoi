@@ -13,7 +13,7 @@ export default class Carousel extends Component {
         let { data, title } = this.props;
 
         return (
-            <Animatable.View style={{ backgroundColor: 'white'}} animation="fadeIn">
+            <Animatable.View style={{ backgroundColor: 'white'}} animation="fadeInUp">
                 {this.displayTitle(title)}
                 <View style={{width, height}}>
                     <IndicatorViewPager style={{flex: 1}} indicator={this.indicator()}>
@@ -30,7 +30,7 @@ export default class Carousel extends Component {
 
     renderItems(data) {
         return (
-            <View style={{ flex: 1, padding: 10, borderColor: 'grey', borderRadius: 5}}>
+            <View style={{ flex: 1, padding: 10, borderRadius: 5}}>
                 <TouchableHighlight onPress={() => this._goToDetail(data)} style={{ flex: 1 }}>
                     <Image source={{uri: getImage(data)}} 
                         style={{ flex: 1, resizeMode: 'cover', borderRadius: 5}} />

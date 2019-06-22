@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import firebase from 'firebase';
-import { Update } from 'expo';
+import { Updates } from 'expo';
 import config from '../config';
 import * as Animatable from 'react-native-animatable';
 import Cache from '../Cache';
@@ -13,10 +13,12 @@ export default class Landing extends Component {
 
     componentDidMount() {
         Cache.clean();
-        Update.checkForUpdateAsync().then(update => {
+        Updates.checkForUpdateAsync().then(update => {
             if (update.isAvailable) {
                 Cache.clear();
             }
+        }).catch(e => {
+            // Do nothing...
         });
         this.navigate();
     }

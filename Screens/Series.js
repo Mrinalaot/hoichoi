@@ -34,11 +34,11 @@ class Series extends Component {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
         <View style={{height: StatusBar.currentHeight}}></View>
-        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 2}}>
+        <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 5, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
-            <Icon name="arrow-back" size={24} style={{marginRight: 20}} />
+            <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white" />
           </TouchableRipple>
-          <Text style={{fontSize: 18, fontWeight: '400', flex: 1}}>{this.state.data.gist.title}</Text>
+          <Text style={{fontSize: 18, fontWeight: '400', flex: 1, color: 'white'}}>{this.state.data.gist.title}</Text>
           <TouchableRipple onPress={this.toggleFavorite.bind(this)}>
             {this.displayFavoriteIcon()}
           </TouchableRipple>
@@ -87,7 +87,7 @@ class Series extends Component {
 
     return (
       <View style={{flex: 1, marginBottom: 50}}>
-        <FlatList data={this.state.data.seasons} renderItem={({item}) => this._renderSeason(item)} 
+        <FlatList data={this.state.data.seasons.reverse()} renderItem={({item}) => this._renderSeason(item)} 
           keyExtractor={(item, index) => `${index}`} />
       </View>
     );
@@ -110,7 +110,7 @@ class Series extends Component {
   _renderEpisodes(data) {
     const width = Dimensions.get('window').width * (2 / 3);
     return (
-      <View style={{padding: 10, width, borderColor: 'grey', borderRadius: 5, flex: 1}}>
+      <View style={{padding: 10, width, borderRadius: 5, flex: 1}}>
         <TouchableRipple onPress={() => this._goToDetail(data)}>
           <VideoCard data={data} height={140} fontSize={14} style={{height: '100%'}} />
         </TouchableRipple>
@@ -133,10 +133,10 @@ class Series extends Component {
 
   displayFavoriteIcon() {
     if (this.state.favorite) {
-      return <Icon name="favorite" size={24} color="#f4181c" />
+      return <Icon name="favorite" size={24} color="white" />
     }
 
-    return <Icon name="favorite-border" size={24} />
+    return <Icon name="favorite-border" size={24} color="white" />
   }
 
   setFavorite(series) {

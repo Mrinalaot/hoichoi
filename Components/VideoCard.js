@@ -13,7 +13,7 @@ export default class VideoCard extends Component {
     height = height ? height: 210;
 
     return (
-      <AnimatableCard animation="slideInUp" style={{ ...style, elevation: 4 }}>
+      <AnimatableCard animation="fadeInUp" style={{ ...style, elevation: 4 }}>
         <Card.Cover source={{ uri: getImage(data) }} style={{width: null, height, resizeMode: 'center'}} />
         {this.displayTitle(data)}
       </AnimatableCard>
