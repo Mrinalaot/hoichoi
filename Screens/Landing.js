@@ -2,22 +2,23 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import firebase from 'firebase';
+import { Update } from 'expo';
 import config from '../config';
 import * as Animatable from 'react-native-animatable';
+import Cache from '../Cache';
 
 firebase.initializeApp(config.firebase);
 
 export default class Landing extends Component {
 
     componentDidMount() {
-        const navigation = this.props.navigation;
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                navigation.navigate('App');
-            } else {
-                navigation.navigate('Login');
+        Cache.clean();
+        Update.checkForUpdateAsync().then(update => {
+            if (update.isAvailable) {
+                Cache.clear();
             }
         });
+        this.navigate();
     }
 
     render() {
@@ -34,4 +35,14 @@ export default class Landing extends Component {
         );
     }
 
+    navigate() {
+        const navigation = this.props.navigation;
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                navigation.navigate('App');
+            } else {
+                navigation.navigate('Login');
+            }
+        });
+    }
 }

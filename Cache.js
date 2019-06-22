@@ -54,6 +54,27 @@ class CacheStore {
         return delta.asMinutes() > duration;
     }
 
+    async clear() {
+        let keys = await AsyncStorage.getAllKeys();
+
+        let forDelete = keys.filter(item => item.startsWith(`${this.prefix}.`));
+        await AsyncStorage.multiRemove(forDelete);
+    }
+
+    async clean() {
+        let keys = await AsyncStorage.getAllKeys();
+        let cacheKeys = keys.filter(item => item.startsWith(`${this.prefix}.`));
+        let timeKeys = cacheKeys.filter(item => item.endsWith('.time'));
+
+        timeKeys.forEach(key => {
+            let key = key.split('.').slice(1, -1).join('.');
+            
+            this.expired(key).then(expired => {
+                expired ? this.forget(key) : null;
+            });
+        });
+    }
+
     data(key) {
         return `${this.prefix}.${key}.data`;
     }
