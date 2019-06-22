@@ -26,7 +26,6 @@ class Video extends Component {
       let result = response.data.records[0];
       this.setState({data: result, sources: getVideoSources(result), fetched: true});
     }).catch(err => {
-      console.log(err);
       this.setState({fetched: true, error: true});
     });
 
@@ -34,6 +33,9 @@ class Video extends Component {
   }
 
   render() {
+    const width = Dimensions.get('window').width;
+    const height = (width / 16) * 9;
+
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
         <View style={{height: StatusBar.currentHeight}} />
@@ -47,7 +49,18 @@ class Video extends Component {
           </TouchableRipple>
         </Surface>
         <View style={{flex: 1, backgroundColor: 'white'}}>
-          {this.display()}
+          <ScrollView style={{flex: 1}}>
+            <Image source={{uri: getImage(this.state.data)}} style={{width, height}}/>
+            <View style={{padding: 20}}>
+              <Text style={{fontSize:20, fontWeight: '500'}}>{this.state.data.gist.title}</Text>
+            </View>
+            <Paragraph style={{paddingHorizontal: 20}}>
+              {this.state.data.gist.description}
+            </Paragraph>
+            <View style={{height: 300}}>
+              {this.display()}
+            </View>
+          </ScrollView>
         </View>
       </View>
     );
@@ -66,31 +79,19 @@ class Video extends Component {
       return <Issue navigation={this.props.navigation} />
     }
 
-    const width = Dimensions.get('window').width;
-    const height = (width / 16) * 9;
-
     return (
-      <ScrollView style={{flex: 1}}>
-        <Image source={{uri: getImage(this.state.data)}} style={{width, height}}/>
-        <View style={{padding: 20}}>
-          <Text style={{fontSize:20, fontWeight: '500'}}>{this.state.data.gist.title}</Text>
-        </View>
-        <Paragraph style={{paddingHorizontal: 20}}>
-          {this.state.data.gist.description}
-        </Paragraph>
-        <View style={{height: 300, justifyContent: "space-around", padding: 20}}>
-          {this.state.sources.map(src => {
-            return (
-              <Button mode="outlined" icon="play-circle-outline" onPress={() => this._openVideo(src)} 
-                key={src.label} borderless={true}
-                style={{borderWidth: 1, borderColor: '#f4181c', borderRadius: 5}}
-                color="#f4181c" contentStyle={{paddingVertical: 6}}>
-                PLAY {src.label}
-              </Button>
-            )
-          })}
-        </View>
-      </ScrollView>
+      <View style={{flex: 1, justifyContent: "space-around", padding: 20}}>
+        {this.state.sources.map(src => {
+          return (
+            <Button mode="outlined" icon="play-circle-outline" onPress={() => this._openVideo(src)} 
+              key={src.label} borderless={true}
+              style={{borderWidth: 1, borderColor: '#f4181c', borderRadius: 5}}
+              color="#f4181c" contentStyle={{paddingVertical: 6}}>
+              PLAY {src.label}
+            </Button>
+          )
+        })}
+      </View>
     );
   }
 

@@ -1,8 +1,11 @@
 import http from './http';
 import config from './config';
+import Cache from './Cache';
 
 export const getAuthToken = () => {
-    return http().get('/identity/anonymous-token?site=hoichoitv');
+    return Cache.get('auth', () => {
+        return http().get('/identity/anonymous-token?site=hoichoitv');
+    }, 60 * 24 * 1);
 }
 
 export const searchVideos = term => {
@@ -14,42 +17,33 @@ export const searchSeries = term => {
 }
 
 export const getLayout = () => {
-    return fetch('https://tzsk.github.io/hoichoi.json').then(result => result.json());
+    return Cache.get('layout', () => {
+        return fetch('https://tzsk.github.io/hoichoi.json').then(result => result.json());
+    }, 60 * 24 * 1);
 }
 
 export const getModules = (token) => {
-    return http(token).get('/content/pages?path=/&site=hoichoitv');
+    return Cache.get('modules', () => {
+        return http(token).get('/content/pages?path=/&site=hoichoitv');
+    }, 60 * 24 * 1);
 }
 
 export const getContent = (token, moduleIds) => {
-    return http(token).get('/content/pages?path=/&includeContent=1&site=hoichoitv&modules='+moduleIds.join(','));
+    return Cache.get('content-' + moduleIds.join('-'), () => {
+        return http(token).get('/content/pages?path=/&includeContent=1&site=hoichoitv&modules='+moduleIds.join(','));
+    }, 60 * 24 * 1);
 }
 
 export const getSeries = (series, token) => {
-    return new Promise((resolve, reject) => {
-        let gotSeasons = series.seasons.map(async (item) => {
-            let res = await getVideos(item.episodeIds.join(','), token);
-            let episodes = [];
-            let records = res.data.records;
-            item.episodeIds.forEach(id => {
-                episodes.push(records.filter(re => re.gist.id == id)[0]);
-            });
-            item.episodesInfo = episodes;
-
-            return item;
-        });
-
-        Promise.all(gotSeasons).then((data) => {
-            series.seasonsInfo = data.reverse();
-            resolve(series);
-        }).catch(err => {
-            reject(err);
-        });
-    });
+    return Cache.get('series-'+series.id, () => {
+        return http(token).get('/content/pages?path='+series.gist.permalink+'&includeContent=1&site=hoichoitv');
+    }, 60 * 24 * 1);
 }
 
 export const getVideos = (ids, token) => {
-    return http(token).get('/content/videos?site=hoichoitv&ids='+ids);
+    return Cache.get('videos-' + ids.split(',').join('-'), () => {
+        return http(token).get('/content/videos?site=hoichoitv&ids='+ids);
+    }, 60 * 24 * 5);
 }
 
 export const getImage = item => {

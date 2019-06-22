@@ -66,7 +66,7 @@ export default class Login extends Component {
           <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 20 }}>
             <View style={{ width: '100%' }}>
               <Text style={{ fontSize: 16, fontWeight: '200', textAlign: 'center' }}>App Version</Text>
-              <Text style={{ textAlign: 'center' }}>1.3.2</Text>
+              <Text style={{ textAlign: 'center' }}>1.3.3</Text>
             </View>
           </View>
         </View>

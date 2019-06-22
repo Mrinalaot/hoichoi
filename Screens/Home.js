@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-import { 
-  Text, View, StatusBar, ToastAndroid, Image, ScrollView,
-  Animated, BackHandler, Keyboard, Dimensions, FlatList
-} from 'react-native';
+import { View, StatusBar, Image, Animated, Dimensions, FlatList } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Surface, Searchbar, Button, ActivityIndicator, Avatar, TouchableRipple, FAB } from 'react-native-paper';
+import { Surface, ActivityIndicator, Avatar, TouchableRipple, FAB } from 'react-native-paper';
 import { getAuthToken, getLayout, getContent, getModules } from '../actions';
 import Carousel from '../Components/Carousel';
 import Horizontal from '../Components/Horizontal';
 import Issue from '../Components/Issue';
 import firebase from 'firebase';
 
-const AnimatableSurface = Animatable.createAnimatableComponent(Surface);
-const AnimatableButton = Animatable.createAnimatableComponent(Button);
 const AFAB = Animatable.createAnimatableComponent(FAB);
 
 class Home extends Component {
@@ -32,8 +26,42 @@ class Home extends Component {
       return getLayout();
     }).then(({ modules }) => {
       this.setState({modules});
-      return getModules(this.state.token);
-    }).then(({ data }) => {
+      this.refresh();
+    })
+    .catch(err => {
+      this.setState({fetched: true, error: true});
+    });
+
+    this.barHeight = StatusBar.currentHeight;
+  }
+
+  render() {
+    return (
+      <View style={{backgroundColor: '#f4181c', flex: 1}}>
+        <View style={{height: this.barHeight}}/>
+        <Surface ref="header" style={{
+            padding: 10, flexDirection: 'row', backgroundColor: '#f4181c', 
+            justifyContent: 'space-between', alignItems: 'center', elevation: 4
+          }}>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+            <Image source={require('../assets/logo.jpeg')} style={{width: 120, height: 40}} />
+          </View>
+          <TouchableRipple onPress={() => this.props.navigation.navigate('Account', {token: this.state.token})}>
+            <Avatar.Image source={{uri: firebase.auth().currentUser.photoURL}} size={36} 
+              style={{ backgroundColor: 'white', marginRight: 10 }} />
+          </TouchableRipple>
+        </Surface>
+        <Animated.View style={{flex: 1, backgroundColor: 'white'}}>
+          {this.renderModules()}
+        </Animated.View>
+        <AFAB ref="searchIcon" icon="search" animation="zoomIn" onPress={this._onSearchPress.bind(this)}
+          style={{position: 'absolute', margin: 16, right: 0, bottom: 0, backgroundColor: '#f4181c'}} />
+      </View>
+    );
+  }
+
+  refresh() {
+    getModules(this.state.token).then(({ data }) => {
       let titles = this.state.modules.map(module => {
         return module.title;
       });
@@ -70,35 +98,8 @@ class Home extends Component {
       });
     })
     .catch(err => {
-      this.setState({fetched: true, error: true})
+      this.setState({error: true});
     });
-
-    this.barHeight = StatusBar.currentHeight;
-  }
-
-  render() {
-    return (
-      <View style={{backgroundColor: '#f4181c', flex: 1}}>
-        <View style={{height: this.barHeight}}/>
-        <Surface ref="header" style={{
-            padding: 10, flexDirection: 'row', backgroundColor: '#f4181c', 
-            justifyContent: 'space-between', alignItems: 'center', elevation: 4
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-            <Image source={require('../assets/logo.jpeg')} style={{width: 120, height: 40}} />
-          </View>
-          <TouchableRipple onPress={() => this.props.navigation.navigate('Account', {token: this.state.token})}>
-            <Avatar.Image source={{uri: firebase.auth().currentUser.photoURL}} size={36} 
-              style={{ backgroundColor: 'white', marginRight: 10 }} />
-          </TouchableRipple>
-        </Surface>
-        <Animated.View style={{flex: 1, backgroundColor: 'white'}}>
-          {this.renderModules()}
-        </Animated.View>
-        <AFAB ref="searchIcon" icon="search" animation="zoomIn" onPress={this._onSearchPress.bind(this)}
-          style={{position: 'absolute', margin: 16, right: 0, bottom: 0, backgroundColor: '#f4181c'}} />
-      </View>
-    );
   }
 
   renderModules() {

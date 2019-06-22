@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, Dimensions, ListView, ScrollView, FlatList } from 'react-native';
+import { View, Text, StatusBar, Image, Dimensions, ScrollView, FlatList } from 'react-native';
 import { Surface, Paragraph, ActivityIndicator, TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getImage, getSeries } from '../actions';
@@ -18,15 +18,11 @@ class Series extends Component {
 
   componentWillMount() {
     let series = this.props.navigation.getParam('data');
-    series.seasons = series.seasons.map(item => {
-        item.episodeIds = item.episodes.map(ep => ep.id);
-
-        return item;
-    });
 
     this.setState({ data: series });
-    getSeries(series, this.props.navigation.getParam('token')).then(updatedSeries => {
-      this.setState({data: updatedSeries, fetched: true});
+    getSeries(series, this.props.navigation.getParam('token')).then(seriesPage => {
+      let module = seriesPage.data.modules.find(item => item.moduleType == 'ShowDetailModule');
+      this.setState({data: module.contentData[0], fetched: true});
     }).catch(e => {
       this.setState({fetched: true, error: true});
     });
@@ -89,12 +85,9 @@ class Series extends Component {
       );
     }
 
-    // let provider = new ListView.DataSource({rowHasChanged: (ri, r2) => ri != r2});
-    // let dataSource = provider.cloneWithRows(this.state.data.seasonsInfo);
-
     return (
       <View style={{flex: 1, marginBottom: 50}}>
-        <FlatList data={this.state.data.seasonsInfo} renderItem={({item}) => this._renderSeason(item)} 
+        <FlatList data={this.state.data.seasons} renderItem={({item}) => this._renderSeason(item)} 
           keyExtractor={(item, index) => `${index}`} />
       </View>
     );
@@ -105,7 +98,7 @@ class Series extends Component {
       <View style={{height: 290}} key={season.id}>
         <Text style={{fontSize: 18, fontWeight: '500', padding: 20}}>{season.title}</Text>
         <View style={{flex: 1, paddingHorizontal: 10}}>
-          <FlatList data={season.episodesInfo} horizontal={true}
+          <FlatList data={season.episodes} horizontal={true}
             showsHorizontalScrollIndicator={false} keyExtractor={(item, index) => `${index}`}
             renderItem={({item}) => this._renderEpisodes(item)} 
             />
@@ -117,7 +110,7 @@ class Series extends Component {
   _renderEpisodes(data) {
     const width = Dimensions.get('window').width * (2 / 3);
     return (
-      <View style={{padding: 10, width, borderColor: 'grey', borderRadius: 5, flex: 1}} key={data.gist.id}>
+      <View style={{padding: 10, width, borderColor: 'grey', borderRadius: 5, flex: 1}}>
         <TouchableRipple onPress={() => this._goToDetail(data)}>
           <VideoCard data={data} height={140} fontSize={14} style={{height: '100%'}} />
         </TouchableRipple>
