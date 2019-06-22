@@ -7,11 +7,9 @@ export default class Horizontal extends Component {
     
     render() {
         let { title, data } = this.props;
-        // let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        // let dataSource = ds.cloneWithRows(data);
 
         return (
-            <Animatable.View style={{ backgroundColor: 'white'}} animation="slideInUp">
+            <Animatable.View style={{ backgroundColor: 'white'}} animation="fadeIn">
                 <Text style={{ fontSize: 16, padding: 10, fontWeight: '500'}}>{title}</Text>
                 <FlatList data={data} horizontal={true}
                     showsHorizontalScrollIndicator={false}

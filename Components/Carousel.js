@@ -13,7 +13,7 @@ export default class Carousel extends Component {
         let { data, title } = this.props;
 
         return (
-            <Animatable.View style={{ backgroundColor: 'white'}} animation="slideInUp">
+            <Animatable.View style={{ backgroundColor: 'white'}} animation="fadeIn">
                 {this.displayTitle(title)}
                 <View style={{width, height}}>
                     <IndicatorViewPager style={{flex: 1}} indicator={this.indicator()}>
