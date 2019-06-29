@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ListView, Dimensions, FlatList } from 'react-native';
+import { View, Text, StatusBar, Dimensions, FlatList } from 'react-native';
 import { Surface, ActivityIndicator, TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { searchVideos, searchSeries } from '../actions';

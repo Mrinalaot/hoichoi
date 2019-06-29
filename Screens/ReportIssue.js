@@ -3,6 +3,7 @@ import { View, Text, StatusBar, ToastAndroid } from 'react-native';
 import { Surface, Button, TouchableRipple, TextInput, ActivityIndicator } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { submitIssueOrFeedback } from '../actions';
+import firebase from 'firebase';
 
 class Video extends Component {
 
@@ -69,7 +70,9 @@ class Video extends Component {
     const assignees = ['tzsk'];
     this.setState({ loading: true });
 
-    submitIssueOrFeedback({title, body, labels, assignees}).then(response => {
+    const { displayName, email } = firebase.auth().currentUser;
+
+    submitIssueOrFeedback({title, body: `${body} \n\n By: ${displayName} - <${email}>`, labels, assignees}).then(response => {
       this.setState({ loading: false });
       if ('id' in response) {
         this.setState({title: '', body: ''});

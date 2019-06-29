@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { Google } from 'expo';
 import config from '../config';
 import firebase from 'firebase';

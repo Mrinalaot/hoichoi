@@ -24,7 +24,7 @@ export default class Horizontal extends Component {
         let theWidth = Dimensions.get('window').width * (2 / 3);
         let theHeight = theWidth * (9 / 16);
         return (
-            <View style={{ margin: 10, width: theWidth, borderColor: 'grey', borderRadius: 5}}>
+            <View style={{ margin: 10, width: theWidth, borderColor: 'grey', borderRadius: 5, elevation: 5}}>
                 <TouchableHighlight onPress={() => this._goToDetail(data)} style={{width: theWidth, height: theHeight}}>
                     <Image source={{uri: getImage(data)}} 
                         style={{ flex: 1, resizeMode: 'cover', borderRadius: 5}} />
