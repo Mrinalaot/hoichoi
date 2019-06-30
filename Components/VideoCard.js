@@ -14,7 +14,7 @@ export default class VideoCard extends Component {
 
     return (
       <AnimatableCard animation="fadeInUp" style={{ ...style, elevation: 4 }}>
-        <Card.Cover source={{ uri: getImage(data) }} style={{width: null, height, resizeMode: 'center'}} />
+        <Card.Cover source={{ uri: getImage(data), cache: 'force-cache' }} style={{width: null, height, resizeMode: 'center'}} />
         {this.displayTitle(data)}
       </AnimatableCard>
     );

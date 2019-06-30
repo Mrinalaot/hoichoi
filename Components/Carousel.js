@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, TouchableHighlight, Image } from 'react-native';
+import { Text, View, Dimensions, TouchableHighlight } from 'react-native';
 import { getImage } from '../actions';
 import { IndicatorViewPager, PagerDotIndicator } from 'rn-viewpager';
 import * as Animatable from 'react-native-animatable';
@@ -33,7 +33,7 @@ export default class Carousel extends Component {
             <View style={{ flex: 1, padding: 10, borderRadius: 5}}>
                 <TouchableHighlight onPress={() => this._goToDetail(data)} style={{ flex: 1 }}>
                     <View style={{ flex: 1, elevation: 5 }}>
-                        <Image source={{uri: getImage(data)}} 
+                        <Animatable.Image source={{uri: getImage(data), cache: 'force-cache'}} animation="fadeIn"
                             style={{ flex: 1, resizeMode: 'cover', borderRadius: 5}} />
                     </View>
                 </TouchableHighlight>

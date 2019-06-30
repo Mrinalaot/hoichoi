@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, TouchableHighlight, Image, FlatList } from 'react-native';
+import { View, Text, Dimensions, TouchableHighlight, FlatList } from 'react-native';
 import { getImage } from '../actions';
 import * as Animatable from 'react-native-animatable';
 
@@ -26,7 +26,7 @@ export default class Horizontal extends Component {
         return (
             <View style={{ margin: 10, width: theWidth, borderColor: 'grey', borderRadius: 5, elevation: 5}}>
                 <TouchableHighlight onPress={() => this._goToDetail(data)} style={{width: theWidth, height: theHeight}}>
-                    <Image source={{uri: getImage(data)}} 
+                    <Animatable.Image source={{uri: getImage(data), cache: 'force-cache'}} animation="fadeIn"
                         style={{ flex: 1, resizeMode: 'cover', borderRadius: 5}} />
                 </TouchableHighlight>
             </View>

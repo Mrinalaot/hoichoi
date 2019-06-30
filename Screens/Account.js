@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StatusBar, Alert } from 'react-native';
+import { Text, View, StatusBar, Alert, Share, ToastAndroid } from 'react-native';
 import firebase from 'firebase';
 import { TouchableRipple, Divider, Surface } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Animatable from 'react-native-animatable';
+import config from '../config';
 
 export default class Login extends Component {
 
@@ -55,6 +56,12 @@ export default class Login extends Component {
               <Text style={{ fontSize: 18 }}>Report an Issue</Text>
             </View>
           </TouchableRipple>
+          <TouchableRipple onPress={this.shareApp.bind(this)}>
+            <View style={{flexDirection: 'row', alignItems: 'center', padding: 17}}>
+              <Icon name="share-variant" size={24} style={{marginRight: 20}} />
+              <Text style={{ fontSize: 18 }}>Share the App</Text>
+            </View>
+          </TouchableRipple>
           <Divider />
           <TouchableRipple onPress={this.askSignOut.bind(this)}>
             <View style={{flexDirection: 'row', alignItems: 'center', padding: 17}}>
@@ -66,7 +73,7 @@ export default class Login extends Component {
           <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 20 }}>
             <View style={{ width: '100%' }}>
               <Text style={{ fontSize: 16, fontWeight: '200', textAlign: 'center' }}>App Version</Text>
-              <Text style={{ textAlign: 'center' }}>1.3.3</Text>
+              <Text style={{ textAlign: 'center' }}>1.3.4</Text>
             </View>
           </View>
         </View>
@@ -86,11 +93,20 @@ export default class Login extends Component {
     this.props.navigation.navigate('Issue', {type: 'Feedback'});
   }
 
+  shareApp() {
+    Share.share({
+      title: 'Hoichoi TV Free',
+      message: 'Watch all Hoichoi TV content for free. Download the app from here: ' + config.apk
+    }, {
+      subject: 'Hoichoi TV Free'
+    });
+  }
+
   askSignOut() {
-    Alert.alert('Are you sure?', 'You want to log out?', [
-      {text: 'Yes', onPress: this.logOutAsync.bind(this), style: 'destructive'},
-      {text: 'No'}
-    ])
+    Alert.alert('Are you sure?', 'You want to Sign Out?', [
+      {text: 'No, Stay'},
+      {text: 'Yes, Sign Out', onPress: this.logOutAsync.bind(this), style: 'destructive'}
+    ]);
   }
 
   async logOutAsync() {

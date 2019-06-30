@@ -7,6 +7,7 @@ import Carousel from '../Components/Carousel';
 import Horizontal from '../Components/Horizontal';
 import Issue from '../Components/Issue';
 import firebase from 'firebase';
+import Cache from '../Cache';
 
 const AFAB = Animatable.createAnimatableComponent(FAB);
 
@@ -17,21 +18,11 @@ class Home extends Component {
     modules: [],
     fetched: false,
     error: false,
+    refreshing: false,
   }
 
   componentWillMount() {
-    getAuthToken().then(response => {
-      this.setState({token: response.data.authorizationToken});
-
-      return getLayout();
-    }).then(({ modules }) => {
-      this.setState({modules});
-      this.refresh();
-    })
-    .catch(err => {
-      this.setState({fetched: true, error: true});
-    });
-
+    this.getInitialData();
     this.barHeight = StatusBar.currentHeight;
   }
 
@@ -60,8 +51,25 @@ class Home extends Component {
     );
   }
 
-  refresh() {
-    getModules(this.state.token).then(({ data }) => {
+  onRefresh() {
+    this.setState({refreshing: true, fetched: false});
+    Cache.clear().then(() => {
+      return this.getInitialData();
+    }).finally(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
+  getInitialData() {
+    return getAuthToken().then(response => {
+      this.setState({token: response.data.authorizationToken});
+
+      return getLayout();
+    }).then(({ modules }) => {
+      this.setState({ modules });
+
+      return getModules(this.state.token);
+    }).then(({ data }) => {
       let titles = this.state.modules.map(module => {
         return module.title;
       });
@@ -75,7 +83,7 @@ class Home extends Component {
       let filteredModules = modules.filter(item => item.id);
       let moduleIds = filteredModules.map(fm => fm.id);
       this.setState({modules: filteredModules, fetched: true});
-      
+
       filteredModules.forEach(fm => {
         getContent(this.state.token, [fm.id]).then(({ data }) => {
           if (data.modules.length < 1) {
@@ -96,9 +104,8 @@ class Home extends Component {
           this.setState({modules: transformed});
         });
       });
-    })
-    .catch(err => {
-      this.setState({error: true});
+    }).catch(err => {
+      this.setState({fetched: true, error: true});
     });
   }
 
@@ -118,6 +125,7 @@ class Home extends Component {
     try {
       return (
         <FlatList data={this.state.modules} renderItem={({item}) => this.renderModuleItem(item)} 
+          refreshing={this.state.refreshing} onRefresh={this.onRefresh.bind(this)}
           keyExtractor={(item, index) => `${index}`} contentContainerStyle={{paddingBottom: 80}} />
       );
     } catch(e) {
@@ -127,7 +135,7 @@ class Home extends Component {
 
   renderModuleItem(module) {
     let height = Dimensions.get('window').width * (9 / 16);
-    if (! module.data && !module.id) {
+    if (! module.data && ! module.id) {
       return (
         <View key={module.title} style={{ height }}>
           <Issue navigation={this.props.navigation} />
@@ -135,7 +143,7 @@ class Home extends Component {
       );
     }
 
-    if (!module.data) {
+    if (! module.data) {
       return (
         <View key={module.id} style={{ height, justifyContent: 'center', alignItems: 'center' }}>
           <ActivityIndicator size="large" color="red"/>
