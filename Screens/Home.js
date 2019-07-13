@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Image, Animated, Dimensions, FlatList } from 'react-native';
+import { View, Image, Animated, Dimensions, FlatList } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Surface, ActivityIndicator, Avatar, TouchableRipple, FAB } from 'react-native-paper';
 import { getAuthToken, getLayout, getContent, getModules } from '../actions';
@@ -23,13 +23,11 @@ class Home extends Component {
 
   componentWillMount() {
     this.getInitialData();
-    this.barHeight = StatusBar.currentHeight;
   }
 
   render() {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
-        <View style={{height: this.barHeight}}/>
         <Surface ref="header" style={{
             padding: 10, flexDirection: 'row', backgroundColor: '#f4181c', 
             justifyContent: 'space-between', alignItems: 'center', elevation: 4

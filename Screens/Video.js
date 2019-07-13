@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, Dimensions, Linking, ScrollView } from 'react-native';
+import { View, Text, Image, Dimensions, Linking, ScrollView } from 'react-native';
 import { Surface, ActivityIndicator, Button, Paragraph, TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getVideos, getVideoSources, getImage } from '../actions';
@@ -38,7 +38,6 @@ class Video extends Component {
 
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
-        <View style={{height: StatusBar.currentHeight}} />
         <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 5, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
             <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white" />

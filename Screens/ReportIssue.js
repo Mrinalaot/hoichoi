@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ToastAndroid } from 'react-native';
+import { View, Text, ToastAndroid } from 'react-native';
 import { Surface, Button, TouchableRipple, TextInput, ActivityIndicator } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { submitIssueOrFeedback } from '../actions';
@@ -21,7 +21,6 @@ class Video extends Component {
   render() {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
-        <View style={{height: StatusBar.currentHeight}} />
         <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 2, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
             <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white" />

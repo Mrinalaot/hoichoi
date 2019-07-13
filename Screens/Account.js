@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StatusBar, Alert, Share, ToastAndroid } from 'react-native';
+import { Text, View, Alert, Share } from 'react-native';
 import firebase from 'firebase';
 import { TouchableRipple, Divider, Surface } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,7 +17,6 @@ export default class Login extends Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#f4181c' }}>
-        <View style={{height: StatusBar.currentHeight}} />
         <Surface style={{
           padding: 17, flexDirection: 'row', alignItems: 'center',
           elevation: 5, backgroundColor: '#f4181c'

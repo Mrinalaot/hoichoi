@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, FlatList } from 'react-native';
+import { View, Text, Dimensions, FlatList } from 'react-native';
 import { Surface, ActivityIndicator, TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { searchVideos, searchSeries } from '../actions';
@@ -15,8 +15,6 @@ export default class Result extends Component {
   }
 
   componentWillMount() {
-    this.barHeight = StatusBar.currentHeight;
-
     const term = this.props.navigation.getParam('search');
     Promise.all([searchSeries(term), searchVideos(term)]).then(findings => {
       let series = findings[0].data;
@@ -32,7 +30,6 @@ export default class Result extends Component {
   render() {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
-        <View style={{height: this.barHeight}}></View>
         <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 5, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
             <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white" />
@@ -116,8 +113,8 @@ export default class Result extends Component {
         style={{flexDirection: 'row'}}
         itemStyle={{margin: 0}}
         itemTextStyle={{fontSize: 18, fontWeight: '400', width, textAlign: 'center'}}
-        selectedItemTextStyle={{ fontSize: 18, fontWeight: '500', color: 'red', width, textAlign: 'center'}}
-        selectedBorderStyle={{ borderColor: 'red' }}
+        selectedItemTextStyle={{ fontSize: 18, fontWeight: '500', color: '#f4181c', width, textAlign: 'center'}}
+        selectedBorderStyle={{ borderColor: '#f4181c' }}
         titles={titles} />
     );
   }

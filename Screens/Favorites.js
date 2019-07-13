@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ListView, Dimensions, FlatList } from 'react-native';
+import { View, Text, Dimensions, FlatList } from 'react-native';
 import { Surface, ActivityIndicator, TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
@@ -15,8 +15,6 @@ export default class Favorites extends Component {
   }
 
   componentWillMount() {
-    this.barHeight = StatusBar.currentHeight;
-
     Promise.all([Favorite.series().get(), Favorite.video().get()]).then(findings => {
       let series = Array.isArray(findings[0]) ? findings[0] : [];
       let videos = Array.isArray(findings[1]) ? findings[1] : [];
@@ -31,7 +29,6 @@ export default class Favorites extends Component {
   render() {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
-        <View style={{height: this.barHeight}}></View>
         <Surface style={{padding: 17, flexDirection: 'row', alignItems: 'center', elevation: 5, backgroundColor: '#f4181c'}}>
           <TouchableRipple onPress={this._invokeBack.bind(this)}>
             <Icon name="arrow-back" size={24} style={{marginRight: 20}} color="white"></Icon>
@@ -113,8 +110,8 @@ export default class Favorites extends Component {
         style={{flexDirection: 'row'}}
         itemStyle={{margin: 0}}
         itemTextStyle={{fontSize: 18, fontWeight: '400', width: width / titles.length, textAlign: 'center'}}
-        selectedItemTextStyle={{ fontSize: 18, fontWeight: '500', color: 'red', width: width / titles.length, textAlign: 'center'}}
-        selectedBorderStyle={{ borderColor: 'red' }}
+        selectedItemTextStyle={{ fontSize: 18, fontWeight: '500', color: '#f4181c', width: width / titles.length, textAlign: 'center'}}
+        selectedBorderStyle={{ borderColor: '#f4181c' }}
         titles={titles} />
     );
   }

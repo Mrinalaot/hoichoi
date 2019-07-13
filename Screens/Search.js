@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, ToastAndroid } from 'react-native';
+import { View, Text, Image, ToastAndroid } from 'react-native';
 import { Surface, TouchableRipple, Avatar, Button, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from 'firebase';
@@ -12,7 +12,6 @@ class Search extends Component {
   render() {
     return (
       <View style={{backgroundColor: '#f4181c', flex: 1}}>
-        <View style={{height: StatusBar.currentHeight}}/>
         <Surface ref="header" style={{
             padding: 10, flexDirection: 'row', backgroundColor: '#f4181c', 
             justifyContent: 'space-between', alignItems: 'center', elevation: 4
