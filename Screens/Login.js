@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Google } from 'expo';
+import { Google, Amplitude } from 'expo';
 import config from '../config';
 import firebase from 'firebase';
 import { TouchableRipple, ActivityIndicator } from 'react-native-paper';
@@ -9,6 +9,12 @@ import * as Animatable from 'react-native-animatable';
 export default class Login extends Component {
 
   state = {loading: false}
+
+  componentDidMount() {
+    Amplitude.logEventWithProperties('PageView', {
+      page: 'Login'
+    });
+  }
 
   isUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
@@ -37,6 +43,10 @@ export default class Login extends Component {
 
         firebase.auth().signInWithCredential(credential).then(result => {
           this.setState({loading: false});
+          Amplitude.logEventWithProperties('Login', {
+            name: firebaseUser.displayName,
+            email: firebaseUser.email
+          });
         });
       }
     });

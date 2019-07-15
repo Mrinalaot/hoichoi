@@ -4,6 +4,7 @@ import { Surface, Button, TouchableRipple, TextInput, ActivityIndicator } from '
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { submitIssueOrFeedback } from '../actions';
 import firebase from 'firebase';
+import { Amplitude } from 'expo';
 
 class Video extends Component {
 
@@ -16,6 +17,12 @@ class Video extends Component {
 
   componentWillMount() {
     this.setState({ type: this.props.navigation.getParam('type') });
+  }
+
+  componentDidMount() {
+    Amplitude.logEventWithProperties('PageView', {
+      page: this.state.type
+    });
   }
 
   render() {

@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getVideos, getVideoSources, getImage } from '../actions';
 import Favorite from '../favorite';
 import Issue from '../Components/Issue';
+import { Amplitude } from 'expo';
 
 class Video extends Component {
 
@@ -14,13 +15,14 @@ class Video extends Component {
     fetched: false,
     favorite: false,
     error: false,
+    show: null,
   }
 
   componentWillMount() {
     const itemId = this.props.navigation.getParam('itemId');
     const token = this.props.navigation.getParam('token');
     const video = this.props.navigation.getParam('data');
-    this.setState({data: video});
+    this.setState({data: video, show: this.props.navigation.getParam('show')});
 
     getVideos(itemId, token).then(response => {
       let result = response.data.records[0];
@@ -30,6 +32,11 @@ class Video extends Component {
     });
 
     this.setFavorite(video);
+  }
+
+  componentDidMount() {
+    let eventData = this._getEventData();
+    Amplitude.logEventWithProperties('PageView', eventData);
   }
 
   render() {
@@ -96,15 +103,21 @@ class Video extends Component {
 
   toggleFavorite() {
     let video = this.props.navigation.getParam('data');
+    let eventData = this._getEventData();
+    eventData.type = eventData.page;
+    delete eventData.page;
     if (this.state.favorite) {
       Favorite.video().delete(video).then(() => {
         this.setFavorite(video);
       });
+      Amplitude.logEventWithProperties('RemoveFavorite', eventData);
+      return;
     }
 
     Favorite.video().set(video).then(() => {
       this.setFavorite(video);
     });
+    Amplitude.logEventWithProperties('AddFavorite', eventData);
   }
 
   displayFavoriteIcon() {
@@ -119,7 +132,26 @@ class Video extends Component {
     Favorite.video().has(video).then(favorite => this.setState({favorite}));
   }
 
+  _getEventData() {
+    let eventData = {
+      page: 'Video',
+      title: this.state.data.gist.title
+    };
+    if (this.state.show) {
+      eventData.page = 'Episode';
+      eventData.series = this.state.show.title;
+      eventData.season = this.state.show.season;
+    }
+
+    return eventData;
+  }
+
   _openVideo(source) {
+    let eventData = this._getEventData();
+    eventData.quality = source.label;
+    delete eventData.page;
+    Amplitude.logEventWithProperties('Play', eventData);
+
     Linking.openURL(source.src);
   }
 

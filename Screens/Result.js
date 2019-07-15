@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { searchVideos, searchSeries } from '../actions';
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
 import VideoCard from '../Components/VideoCard';
+import { Amplitude } from 'expo';
 
 export default class Result extends Component {
 
@@ -24,6 +25,13 @@ export default class Result extends Component {
         videoList: videos,
         fetched: true
       });
+    });
+  }
+
+  componentDidMount() {
+    Amplitude.logEventWithProperties('PageView', {
+      page: 'Result',
+      title: this.props.navigation.getParam('search')
     });
   }
 

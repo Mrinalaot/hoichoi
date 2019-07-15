@@ -3,6 +3,7 @@ import { View, Text, Image, ToastAndroid } from 'react-native';
 import { Surface, TouchableRipple, Avatar, Button, Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from 'firebase';
+import { Amplitude } from 'expo';
 
 class Search extends Component {
   state = {
@@ -53,6 +54,12 @@ class Search extends Component {
     } else {
       ToastAndroid.showWithGravity('Please enter search phrase', ToastAndroid.SHORT, ToastAndroid.CENTER);
     }
+  }
+
+  componentDidMount() {
+    Amplitude.logEventWithProperties('PageView', {
+      page: 'Search'
+    });
   }
 }
 

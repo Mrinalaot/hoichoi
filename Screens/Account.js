@@ -5,13 +5,21 @@ import { TouchableRipple, Divider, Surface } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Animatable from 'react-native-animatable';
 import config from '../config';
+import { Amplitude } from 'expo';
+import Cache from '../Cache';
 
 export default class Login extends Component {
 
-  state = { user: null }
+  state = { user: null, version: config.version }
 
   componentWillMount() {
     this.setState({ user: firebase.auth().currentUser });
+  }
+
+  componentDidMount() {
+    Amplitude.logEventWithProperties('PageView', {
+      page: 'Account'
+    });
   }
 
   render() {
@@ -72,7 +80,7 @@ export default class Login extends Component {
           <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 20 }}>
             <View style={{ width: '100%' }}>
               <Text style={{ fontSize: 16, fontWeight: '200', textAlign: 'center' }}>App Version</Text>
-              <Text style={{ textAlign: 'center' }}>1.3.4</Text>
+              <Text style={{ textAlign: 'center' }}>{this.state.version}</Text>
             </View>
           </View>
         </View>
@@ -93,11 +101,22 @@ export default class Login extends Component {
   }
 
   shareApp() {
-    Share.share({
-      title: 'Hoichoi TV Free',
-      message: 'Watch all Hoichoi TV content for free. Download the app from here: ' + config.apk
-    }, {
-      subject: 'Hoichoi TV Free'
+    Cache.get('layout').then(data => {
+      const link = ('apk' in data) ? data.apk : config.apk;
+      Share.share({
+        title: 'Hoichoi TV Free',
+        message: 'Watch all Hoichoi TV content for free. Download the app from here: ' + link
+      }, {
+        subject: 'Hoichoi TV Free'
+      }).then(result => {
+        if (result.action == Share.sharedAction) {
+          Amplitude.logEventWithProperties('Share', {
+            name: this.state.user.displayName,
+            email: this.state.user.email,
+            link,
+          });
+        }
+      });
     });
   }
 
@@ -109,6 +128,10 @@ export default class Login extends Component {
   }
 
   async logOutAsync() {
+    Amplitude.logEventWithProperties('Logout', {
+      name: this.state.user.displayName,
+      email: this.state.user.email
+    });
     firebase.auth().signOut();
   }
 

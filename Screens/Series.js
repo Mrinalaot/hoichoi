@@ -6,6 +6,7 @@ import { getImage, getSeries } from '../actions';
 import VideoCard from '../Components/VideoCard';
 import Issue from '../Components/Issue';
 import Favorite from '../favorite';
+import { Amplitude } from 'expo';
 
 class Series extends Component {
 
@@ -28,6 +29,13 @@ class Series extends Component {
     });
 
     this.setFavorite(series);
+  }
+
+  componentDidMount() {
+    Amplitude.logEventWithProperties('PageView', {
+      page: 'Series',
+      title: this.state.data.gist.title
+    });
   }
 
   render() {
@@ -99,18 +107,18 @@ class Series extends Component {
         <View style={{flex: 1, paddingHorizontal: 10}}>
           <FlatList data={season.episodes} horizontal={true}
             showsHorizontalScrollIndicator={false} keyExtractor={(item, index) => `${index}`}
-            renderItem={({item}) => this._renderEpisodes(item)} 
+            renderItem={({item}) => this._renderEpisodes(item, season)} 
             />
         </View>
       </View>
     );
   }
 
-  _renderEpisodes(data) {
+  _renderEpisodes(data, season) {
     const width = Dimensions.get('window').width * (2 / 3);
     return (
       <View style={{padding: 10, width, borderRadius: 5, flex: 1}}>
-        <TouchableRipple onPress={() => this._goToDetail(data)}>
+        <TouchableRipple onPress={() => this._goToDetail(data, season)}>
           <VideoCard data={data} height={140} fontSize={14} style={{height: '100%'}} />
         </TouchableRipple>
       </View>
@@ -119,15 +127,22 @@ class Series extends Component {
 
   toggleFavorite() {
     let series = this.props.navigation.getParam('data');
+    let eventData = {
+      type: 'Series',
+      title: this.state.data.gist.title,
+    };
     if (this.state.favorite) {
       Favorite.series().delete(series).then(() => {
         this.setFavorite(series);
       });
+      Amplitude.logEventWithProperties('RemoveFavorite', eventData);
+      return;
     }
 
     Favorite.series().set(series).then(() => {
       this.setFavorite(series);
     });
+    Amplitude.logEventWithProperties('AddFavorite', eventData);
   }
 
   displayFavoriteIcon() {
@@ -142,9 +157,13 @@ class Series extends Component {
     Favorite.series().has(series).then(favorite => this.setState({favorite}));
   }
 
-  _goToDetail(item) {
+  _goToDetail(item, season) {
     const params = {token: this.props.navigation.getParam('token'), data: item};
-    this.props.navigation.navigate('Video', {...params, itemId: item.gist.id});
+    const show = {
+      title: this.state.data.gist.title,
+      season: season.title
+    };
+    this.props.navigation.navigate('Video', {...params, itemId: item.gist.id, show});
   }
 
   _invokeBack() {

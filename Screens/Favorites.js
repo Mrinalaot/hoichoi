@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {IndicatorViewPager, PagerTitleIndicator} from 'rn-viewpager';
 import VideoCard from '../Components/VideoCard';
 import Favorite from '../favorite';
+import { Amplitude } from 'expo';
 
 export default class Favorites extends Component {
 
@@ -23,6 +24,12 @@ export default class Favorites extends Component {
         videoList: videos,
         fetched: true
       });
+    });
+  }
+
+  componentDidMount() {
+    Amplitude.logEventWithProperties('PageView', {
+      page: 'Favorites'
     });
   }
 

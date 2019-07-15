@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import firebase from 'firebase';
-import { Updates } from 'expo';
+import { Updates, Amplitude } from 'expo';
 import config from '../config';
 import * as Animatable from 'react-native-animatable';
 import Cache from '../Cache';
@@ -16,6 +16,9 @@ export default class Landing extends Component {
         Updates.checkForUpdateAsync().then(update => {
             if (update.isAvailable) {
                 Cache.clear();
+                Amplitude.logEventWithProperties('Update', {
+                    version: update.manifest.version
+                });
             }
         }).catch(e => {
             // Do nothing...
@@ -42,6 +45,11 @@ export default class Landing extends Component {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 navigation.navigate('App');
+                Amplitude.setUserId(user.uid);
+                Amplitude.setUserProperties({
+                    name: user.displayName,
+                    email: user.email
+                });
             } else {
                 navigation.navigate('Login');
             }

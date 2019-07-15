@@ -8,6 +8,7 @@ import Horizontal from '../Components/Horizontal';
 import Issue from '../Components/Issue';
 import firebase from 'firebase';
 import Cache from '../Cache';
+import { Amplitude } from 'expo';
 
 const AFAB = Animatable.createAnimatableComponent(FAB);
 
@@ -23,6 +24,12 @@ class Home extends Component {
 
   componentWillMount() {
     this.getInitialData();
+  }
+
+  componentDidMount() {
+    Amplitude.logEventWithProperties('PageView', {
+      page: 'Home'
+    });
   }
 
   render() {
